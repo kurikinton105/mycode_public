@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using System.Windows.Forms;
 using System.IO;
-using System.Net.Http; //問題だったやつ
+using System.Net.Http;
 
 using System.Net;
 using System.Runtime.Serialization;
@@ -19,16 +19,26 @@ using System.Runtime.Serialization.Json;
 namespace コンソール
 {
 
-    class MainClass
+    class Login
     {
 
-        private void Button1_Click(string id,string pass)
+        private void Button1_Click()
         {
+
+            string user, password;
+            Console.WriteLine("username >>>");
+            user = Console.ReadLine();
+            Console.WriteLine("password >>>");
+            password = Console.ReadLine();
+
+
             var task = Task.Run(() => {
-                return Post(id,pass);
+                return Post(user,password);
             });
             System.Console.WriteLine(task.Result);
 
+
+            
         }
 
         async public Task<string> Post(string id, string pass)
@@ -47,19 +57,14 @@ namespace コンソール
 
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
-            string id, password;
-            Console.WriteLine("username >>>");
-            id = Console.ReadLine();
-            Console.WriteLine("password >>>");
-            password =  Console.ReadLine();
-
-
-            MainClass obj = new MainClass();
-            obj.Button1_Click(id,password);
-
+            Login obj = new Login();
+            obj.Button1_Click();
 
         }
     }
