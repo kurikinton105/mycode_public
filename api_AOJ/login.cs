@@ -19,9 +19,9 @@ using System.Runtime.Serialization.Json;
 namespace コンソール
 {
 
-    class Login
+    class API
     {
-
+        //Login
         private void Button1_Click()
         {
 
@@ -33,7 +33,7 @@ namespace コンソール
 
 
             var task = Task.Run(() => {
-                return Post(user,password);
+                return Post_Login(user,password);
             });
             System.Console.WriteLine(task.Result);
 
@@ -41,7 +41,7 @@ namespace コンソール
             
         }
 
-        async public Task<string> Post(string id, string pass)
+        async public Task<string> Post_Login(string id, string pass)
         {
             var parameters = new Dictionary<string, string>()
             {
@@ -57,14 +57,31 @@ namespace コンソール
 
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="args"></param>
+
+        //問題取得
+        private void GetChallenges()
+        {
+            var task = Task.Run(() =>{
+                return GET_Challenges();
+            });
+            System.Console.WriteLine(task.Result);
+
+            
+        }
+        async public Task<string> GET_Challenges() 
+        {
+            using (var client = new HttpClient())
+            {
+                var uri = $"https://judgeapi.u-aizu.ac.jp/courses?filter=true&lang=ja";
+                var response = await client.GetAsync(uri);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
         public static void Main(string[] args)
         {
-            Login obj = new Login();
-            obj.Button1_Click();
+            API obj = new API();
+            //obj.Button1_Click();
+            obj.GetChallenges();
 
         }
     }
