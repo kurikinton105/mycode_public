@@ -1,74 +1,154 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+//using System.Windows.Forms;
+using System.IO;
+using System.Net.Http;
 
-namespace AOJ_Project
+using System.Net;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+//using System.Web.Script.Serialization;
+
+
+namespace _17_aoj
 {
-    public JObject GetResponse(string apiUrl, string jsonParameter)
+
+    class API
     {
-        JObject response = null;
-        try
+        //Login
+        private void Login()
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(apiUrl);
-            request.Method = "POST";
-            request.ContentType = "application/json;";
-            // カスタムヘッダーが必要の場合(認証トークンとか)
-            //request.Headers.Add("custom-api-param", "value");
 
-            using (var streamWriter = new StreamWriter(request.GetRequestStream()))
-            {
-                streamWriter.Write(jsonParameter);
-            }
+            string user, password;
+            Console.WriteLine("username >>>");
+            user = Console.ReadLine();
+            Console.WriteLine("password >>>");
+            password = Console.ReadLine();
 
-            var httpResponse = (HttpWebResponse)request.GetResponse();
 
-            // HttpStatusCodeの判断が必要なら
-            if(httpResponse.StatusCode != HttpStatusCode.OK)
-            {
-                throw new Exception("API呼び出しに失敗しました。");
-            }
+            var task = Task.Run(() => {
+                return Post_Login(user, password);
+            });
+            Console.WriteLine(task.Result);
 
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                response = JObject.Parse(streamReader.ReadToEnd());
-            }
-
-            // ex) response["status"]:"success"
         }
-        catch (WebException wex)
+
+        async public Task<string> Post_Login(string id, string pass)
         {
-            // 200以外の場合
-            if (wex.Response != null)
+            var parameters = new Dictionary<string, string>()
             {
-                using (var errorResponse = (HttpWebResponse)wex.Response)
-                {
-                    using (var reader = new StreamReader(errorResponse.GetResponseStream()))
-                    {
-                        response = JObject.Parse(reader.ReadToEnd());
-                    }
-                }
+
+            };
+            var json = "{\"id\":\"" + id + "\",\"password\":\"" + pass + "\"}";
+            Console.WriteLine(json); //json確認用の表示
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync($"https://judgeapi.u-aizu.ac.jp/session", content);
+                return await response.Content.ReadAsStringAsync();
+
             }
         }
-    
-        return response;
-    }
-    class Program
-    {
-        
-        static void Main(string[] args)
-        {
 
-        var apiUrl = "http://apiurl/v1/getHogepoyo"
-        var jsonParameter = new JavaScriptSerializer().Serialize(new
+        //GET関数 Get(URI)で実行
+        private void Get(string URI)
         {
-        name = "Name",
-        email = "EmailAddress",
-        password = "Password",
-        detail_info = new 
-        {
-            info1 = "info1",
-            info2 = "info2"
+            var task = Task.Run(() => {
+                return GET(URI);
+            });
+
+            string[] numbers = new string[100];
+            String str = task.Result;
+            System.Console.WriteLine(task.Result);
+            String[] result = str.Split(':');
+            //String[] result1 = result.Split('":"');
+            for (int i = 0; i < result.Length; i++)
+            {
+                Console.WriteLine("{0}", result[i]);
+
             }
-    });
+            Console.WriteLine(result);
 
-    JObject response = GetResponse(apiUrl, jsonParameter);
+
+        }
+        async public Task<string> GET(string URI)
+        {
+            using (var client = new HttpClient())
+            {
+                var uri = $"" + URI + "";
+                var response = await client.GetAsync(uri);
+                return await response.Content.ReadAsStringAsync();
+            }
+        }
+
+        //Submissions
+        private void Submissions()
+        {
+
+            string problem_id, language, code;
+            Console.WriteLine("Problem id>>> ITP1_1_A");
+            problem_id = Console.ReadLine();
+            Console.WriteLine("language >>> ");
+            language = Console.ReadLine();
+            Console.WriteLine("#include <iostream>\nusing namespace std;\nint main(void){\n cout << \"Hello World\" << endl;\n}");
+            Console.WriteLine("your code >>>");
+            code = Console.ReadLine();
+
+
+
+            var task = Task.Run(() => {
+                return Post_submission(problem_id, language, code);
+            });
+            System.Console.WriteLine(task.Result);
+
+
+
+        }
+
+        async public Task<string> Post_submission(string id, string language, string code)
+        {
+            var parameters = new Dictionary<string, string>()
+            {
+
+            };
+
+            //var json =  "{"problemId":"" + id + ',"language":"' + language + '","sourceCode":' + code +'}';
+
+            //var json = "{" +
+                //"problemId"+":"+ "ITP1_1_A"+","+
+                //"language"+":"+"C" + "," +
+                //"sourceCode" + ":" +
+                //"#include \nint main(){\n  printf(\"Hello World\\n\");\n  return 0;\n}" +
+                //"}";
+
+            var json = "{\"problemId\":\"ITP1_1_A\",\"language\":\"C++\",\"sourceCode\":\"#include <iostream>\\nusing namespace std;\\nint main(void){\\n    cout << \"Hello World\" << endl;\\n}\"}";
+            Console.WriteLine(json); //json確認用の表示
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync($"https://judgeapi.u-aizu.ac.jp/submissions", content);
+                return await response.Content.ReadAsStringAsync();
+
+            }
+        }
+
+
+        public static void Main(string[] args)
+        {
+            API obj = new API();
+            obj.Login();
+            //obj.Get("https://judgeapi.u-aizu.ac.jp/challenges"); //challenges
+            //obj.Get("https://judgeapi.u-aizu.ac.jp/courses?filter=true&lang=ja"); //Course
+            //obj.Get("https://judgeapi.u-aizu.ac.jp//submission_records/recent"); //findRecentSubmissionRecords
+
+            obj.Submissions();
+        }
     }
+
 }
