@@ -14,10 +14,30 @@ using System.Net;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 //using System.Web.Script.Serialization;
+//using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 
 namespace _17_aoj
 {
+    public class SubmissionCode //コードを送るときのjsonのデータ構造
+    {
+        [DataMember(Name = "problemId")]
+        public string ID { get; set; }
+
+        [DataMember(Name = "language")]
+        public string language { get; set; }
+
+        [DataMember(Name = "sourceCode")]
+        public string sourceCode { get; set; }
+    }
+
+    public class Course //コースの問題一覧を取得
+    {
+
+    }
 
     class API
     {
@@ -66,14 +86,18 @@ namespace _17_aoj
             string[] numbers = new string[100];
             String str = task.Result;
             System.Console.WriteLine(task.Result);
-            String[] result = str.Split(':');
+            
+            //String[] result = str.Split(':');
             //String[] result1 = result.Split('":"');
-            for (int i = 0; i < result.Length; i++)
-            {
-                Console.WriteLine("{0}", result[i]);
+            //for (int i = 0; i < result.Length; i++)
+            //{
+            //Console.WriteLine("{0}", result[i]);
 
-            }
-            Console.WriteLine(result);
+            //}
+
+
+
+            //Console.WriteLine(str);
 
 
         }
@@ -100,7 +124,7 @@ namespace _17_aoj
             Console.WriteLine("your code >>>");
             code = Console.ReadLine();
 
-
+            var json_code = JsonConvert.SerializeObject(code);
 
             var task = Task.Run(() => {
                 return Post_submission(problem_id, language, code);
@@ -118,8 +142,7 @@ namespace _17_aoj
 
             };
 
-            //var json =  "{"problemId":"" + id + ',"language":"' + language + '","sourceCode":' + code +'}';
-
+            
             //var json = "{" +
                 //"problemId"+":"+ "ITP1_1_A"+","+
                 //"language"+":"+"C" + "," +
@@ -145,10 +168,13 @@ namespace _17_aoj
             obj.Login();
             //obj.Get("https://judgeapi.u-aizu.ac.jp/challenges"); //challenges
             //obj.Get("https://judgeapi.u-aizu.ac.jp/courses?filter=true&lang=ja"); //Course
+            //obj.Get("https://judgeapi.u-aizu.ac.jp/courses/2?lang=ja"); //プログラミング入門
+            obj.Get("https://judgeapi.u-aizu.ac.jp/resources/descriptions/ja/ITP1_1_A"); //プログラミング入門
             //obj.Get("https://judgeapi.u-aizu.ac.jp//submission_records/recent"); //findRecentSubmissionRecords
 
-            obj.Submissions();
+            //obj.Submissions();
         }
     }
 
 }
+
