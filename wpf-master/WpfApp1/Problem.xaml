@@ -10,6 +10,11 @@
       Title="Problem">
 
     <Grid>
-        
+        <Menu HorizontalAlignment="Left" Height="100" Margin="250,349,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label Content="問題一覧" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="54" Width="134" FontSize="30"/>
+        <Button Content="ログアウト" HorizontalAlignment="Left" Margin="846,10,0,0" VerticalAlignment="Top" Width="125" Height="54" FontSize="25" />
+        <ScrollViewer HorizontalAlignment="Left" Height="600" Margin="0,69,0,0" VerticalAlignment="Top" Width="943">
+            <ScrollBar Width="860"/>
+        </ScrollViewer>
     </Grid>
 </Page>

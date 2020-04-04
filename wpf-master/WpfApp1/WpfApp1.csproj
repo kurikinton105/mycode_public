@@ -58,6 +58,9 @@
     <Compile Include="Problem.xaml.cs">
       <DependentUpon>Problem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SelectProblem2.xaml.cs">
+      <DependentUpon>SelectProblem2.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SelectProblem.xaml.cs">
       <DependentUpon>SelectProblem.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,10 @@
     <Page Include="Problem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SelectProblem2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="SelectProblem.xaml">
       <SubType>Designer</SubType>

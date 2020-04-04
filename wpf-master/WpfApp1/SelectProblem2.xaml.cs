@@ -18,16 +18,11 @@ namespace WpfApp1
     /// <summary>
     /// SelectProblem.xaml の相互作用ロジック
     /// </summary>
-    public partial class SelectProblem : Page
+    public partial class SelectProblem2 : Page
     {
-        public SelectProblem()
+        public SelectProblem2()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

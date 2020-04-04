@@ -43,6 +43,15 @@
                 <Run Text="Page2へ遷移します"/>
             </Hyperlink>
         </TextBlock>
+        <TextBlock Margin="10,99,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   TextWrapping="Wrap">
+            <Run Text="リンク："/>
+            <Hyperlink NavigateUri="SelectProblem.xaml">
+                <Run Text="SelectProblemへ遷移します"/>
+            </Hyperlink>
+        </TextBlock>
         <Label Content="ログイン" HorizontalAlignment="Left" Margin="444,184,0,0"
                VerticalAlignment="Top" Height="51" Width="104" FontSize="30"/>
         <TextBox HorizontalAlignment="Left" Height="33" Margin="376,286,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="241"/>
@@ -59,6 +68,14 @@
                 Width="99" Height="37" 
                 ClickMode="Press"
                 Click="BtnNavigateWithObject_Click"/>
+        <TextBlock Margin="10,120,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap"><Run Text="リンク："/><Run Text=" "/><Hyperlink NavigateUri="SelectProblem2.xaml"><Run Text="SelectProblem2へ遷移します"/></Hyperlink></TextBlock>
+        <TextBlock Margin="10,141,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            TextWrapping="Wrap"><Run Text="リンク："/><Run Text=" "/><Hyperlink NavigateUri="Problem.xaml"><Run Text="Problemへ遷移します"/></Hyperlink></TextBlock>
 
 
 
