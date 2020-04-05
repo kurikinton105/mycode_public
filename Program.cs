@@ -55,25 +55,30 @@ namespace _17_aoj
 
             });
             Console.WriteLine(task.Result);
-            //間違っていた時用の例外処理
-            //if (task.Result == "[{\"id\":1401,\"code\":\"USER_NOT_FOUND_ERROR\",\"message\":\"The user identified by  and the password is not found.\"}]")
-            //{
-            //Console.WriteLine("Wrong the ID or Password!!");
+            var result = task.Result;
 
-            //}
-            //else
-            //{
-            //Console.WriteLine(task.Result);
-                //Get("https://judgeapi.u-aizu.ac.jp/self");
-                //Console.WriteLine("qawsedrftgyhujikolp");
-            //}
+            //間違っていた時用の例外処理
+            /***
+            if (result == "[{\"id\":1401,\"code\":\"USER_NOT_FOUND_ERROR\",\"message\":\"The user identified by  and the password is not found.\"}]")
+            {
+            Console.WriteLine("Wrong the ID or Password!!");
+
+            }
+            /***
+            else
+            {
+            Console.WriteLine(task.Result);
+                Get("https://judgeapi.u-aizu.ac.jp/self");
+                Console.WriteLine("qawsedrftgyhujikolp");
+            }
+            ***/
             
 
         }
 
         public async Task<CookieContainer> Post_Login(string id, string pass)
         {
-            CookieContainer cc;
+            //CookieContainer cc;
             var parameters = new Dictionary<string, string>()
             {
 
@@ -81,6 +86,7 @@ namespace _17_aoj
             var json = "{\"id\":\"" + id + "\",\"password\":\"" + pass + "\"}";
             //Console.WriteLine(json); //json確認用の表示
             var content = new StringContent(json, Encoding.UTF8, "application/json");
+            
             using (var handler = new HttpClientHandler())
             { 
                 using (var client = new HttpClient())
@@ -93,21 +99,25 @@ namespace _17_aoj
 
                     // 2. Cookieの設定
                     Console.WriteLine(response);
-                    var content_after = new FormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        { "key", "value" }
-                       });
+                    var content_after = new StringContent(json, Encoding.UTF8, "application/json");
+                    
                     // リクエストのCookieヘッダに1.で取得した値を設定する
                     content_after.Headers.Add("Cookie", cookie);
                     
                     Console.WriteLine("content ->>" + content + "\n");
+                    Console.WriteLine("content_after ->>" + content_after + "\n");
                     var response_after = await client.PostAsync($"https://judgeapi.u-aizu.ac.jp/session", content_after);
 
                     Console.WriteLine(response_after);
-                    cc = handler.CookieContainer;
+                    //cc = handler.CookieContainer;
+                    //Console.WriteLine(cc);
                     //return
-                    var a = await response.Content.ReadAsStringAsync();
+                     
                     //Console.WriteLine(a + "a");
+
+                    Get("https://judgeapi.u-aizu.ac.jp/self");
+
+                    return await response.Content.ReadAsStringAsync();
                 }
             }
             //CookieCollection cookies = cc.GetCookies(new Uri("https://judgeapi.u-aizu.ac.jp/session"));
@@ -121,9 +131,9 @@ namespace _17_aoj
                 //Console.WriteLine("クッキー発行日時:" + c.TimeStamp.ToString() + Environment.NewLine);
             //}
 
-            Console.WriteLine("finish the login");
+            //Console.WriteLine("finish the login");
 
-            return cc;
+            //return cc;
         }
 
         //GET関数 Get(URI)で実行
@@ -234,7 +244,7 @@ namespace _17_aoj
             //obj.Get("https://judgeapi.u-aizu.ac.jp/courses/2?lang=ja"); //プログラミング入門
             //obj.Get("https://judgeapi.u-aizu.ac.jp/resources/descriptions/ja/ITP1_1_A"); //プログラミング入門
             //obj.Get("https://judgeapi.u-aizu.ac.jp//submission_records/recent"); //findRecentSubmissionRecords
-            //obj.Get("https://judgeapi.u-aizu.ac.jp/self");
+            obj.Get("https://judgeapi.u-aizu.ac.jp/self");
             //obj.Submissions();
 
             /***
