@@ -19,8 +19,15 @@ namespace Questions251616
 
             var obj = new API();
             var result = await obj.LoginAsync(user, password);
-            Console.WriteLine(result);
-            Console.WriteLine();
+            if (result == "[{\"id\":1401,\"code\":\"USER_NOT_FOUND_ERROR\",\"message\":\"The user identified by  and the password is not found.\"}]")
+            {
+            Console.WriteLine("Wrong the ID or Password!!");
+            }
+            else{
+                Console.WriteLine(result);
+                Console.WriteLine();
+            }
+            
 
             var self = await obj.SelfAsync();
             Console.WriteLine(self);
