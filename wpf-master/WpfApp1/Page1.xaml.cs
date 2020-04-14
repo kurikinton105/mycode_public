@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NavigationTest
+namespace WpfApp1
 {
     /// <summary>
     /// Page1.xaml の相互作用ロジック
@@ -31,8 +31,15 @@ namespace NavigationTest
             //NavigationService.Navigate(nextPage);
         }
 
-        private void BtnNavigateWithObject_Click(object sender, RoutedEventArgs e)
+        private void BtnNavigateWithObject_Click(object sender, RoutedEventArgs e) //Loginのぼたんを押したとき（テキスト取得、関数よびだし、画面遷移）
         {
+            // テキストを取得する
+            var user_id = LoginText.Text;
+            var password_login = passwordText.Text;
+            //Console.WriteLine(user_id);
+            Program.Login_Program(user_id,password_login);
+            
+
             NavigationService.Navigate(new Uri("Page2.xaml", UriKind.Relative));
             
         }
