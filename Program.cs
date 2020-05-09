@@ -61,8 +61,20 @@ namespace Questions251616
             ***/
             var self = await obj.SelfAsync();
             Console.WriteLine(self);
-            var submission = await obj.SubmissionAsync("ITP1_1_A", "Python", "print('Hello World')");
-            Console.WriteLine(submission);
+            //string submission = await obj.SubmissionAsync("ITP1_1_B", "Python", "x = int(input())\\nprint(x**3)\\n");
+            //Console.WriteLine(submission);
+            // コードを入力するsubmission
+            Console.Write("problemID >>> ITP1_1_B(exsample) :");
+            string problem = Console.ReadLine();
+            Console.Write("language >>> C++ or Python :");
+            var lang = Console.ReadLine();
+            Console.Write("code >>> x = int(input())\\nprint(x**3)\\n :");
+            string code = Console.ReadLine();
+            string code2 = code.Replace("\n", "\\n");
+            Console.WriteLine(code2);
+            string submission1 = await obj.SubmissionAsync(problem, lang, code2);
+            Console.WriteLine(submission1);
+
             var Judge = await obj.JudgeAsync((4252705));
             Console.WriteLine(Judge);
             
